@@ -12,6 +12,7 @@ import android.content.pm.PackageManager;
 import android.provider.Settings.Secure;
 import android.telephony.TelephonyManager;
 import android.util.Log;
+import android.os.Build;
 
 import java.lang.reflect.Method;
 
@@ -59,7 +60,14 @@ public class UniqueDeviceID extends CordovaPlugin {
 
             String uuid;
             String androidID = Secure.getString(context.getContentResolver(), Secure.ANDROID_ID);
-            String deviceID = tm.getDeviceId();
+            String deviceID;
+            
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                String deviceID = tm.getImei();
+            } else {
+                String deviceID = tm.getDeviceId();
+            }
+            
             String simID = tm.getSimSerialNumber();
             String imei = tm.getImei();
             
