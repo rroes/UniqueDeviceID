@@ -58,9 +58,10 @@ public class UniqueDeviceID extends CordovaPlugin {
             TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
 
             String uuid;
-            String androidID = Secure.getString(context.getContentResolver(), Secure.ANDROID_ID);
-            String deviceID = tm.getDeviceId();
-            String simID = tm.getSimSerialNumber();
+            // rroes: Added trim() to remove spaces which seem to appear randomly on some devices
+            String androidID = Secure.getString(context.getContentResolver(), Secure.ANDROID_ID).trim();
+            String deviceID = tm.getDeviceId().trim();
+            String simID = tm.getSimSerialNumber().trim();
 
             if ("9774d56d682e549c".equals(androidID) || androidID == null) {
                 androidID = "";
