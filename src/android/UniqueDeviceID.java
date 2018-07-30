@@ -60,42 +60,23 @@ public class UniqueDeviceID extends CordovaPlugin {
 
             String uuid;
             String androidID = Secure.getString(context.getContentResolver(), Secure.ANDROID_ID);
-            String deviceID;
-            
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                deviceID = tm.getImei();
-            } else {
-                deviceID = tm.getDeviceId();
-            }
-            
+            String deviceID = tm.getDeviceId();
             String simID = tm.getSimSerialNumber();
-            String imei = tm.getImei();
-            
-            Log.d("UniqueDeviceID","Imei:");
-            Log.d("UniqueDeviceID",imei);
-            
+
             if ("9774d56d682e549c".equals(androidID) || androidID == null) {
                 androidID = "";
             }
-            Log.d("UniqueDeviceID","androidID:");
-            Log.d("UniqueDeviceID",androidID);
 
             if (deviceID == null) {
                 deviceID = "";
             }
-            Log.d("UniqueDeviceID","deviceID:");
-            Log.d("UniqueDeviceID",deviceID);
 
             if (simID == null) {
-                    simID = "";  
+                simID = "";
             }
-            Log.d("UniqueDeviceID","simID:");
-            Log.d("UniqueDeviceID",simID);
-            
+
             uuid = androidID + deviceID + simID;
-            Log.d("UniqueDeviceID",uuid);
-            uuid = uuid.replaceAll("\\s+", "");
-            Log.d("UniqueDeviceID",uuid);
+            uuid = String.format("%32s", uuid).replace(' ', '0');
             uuid = uuid.substring(0, 32);
             uuid = uuid.replaceAll("(\\w{8})(\\w{4})(\\w{4})(\\w{4})(\\w{12})", "$1-$2-$3-$4-$5");
 
