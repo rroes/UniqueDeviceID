@@ -78,7 +78,7 @@ public class UniqueDeviceID extends CordovaPlugin {
             Log.d("UniqueDeviceID","Manufacturer:");
             Log.d("UniqueDeviceID",Build.MANUFACTURER);
             String simID;
-            if (Build.MANUFACTURER.equals("TomTom") {
+            if (Build.MANUFACTURER.equals("TomTom")) {
                 simID = "0";
             }else{
                 simID = tm.getSimSerialNumber();
