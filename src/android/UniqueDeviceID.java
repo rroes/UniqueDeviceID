@@ -61,6 +61,7 @@ public class UniqueDeviceID extends CordovaPlugin {
             String uuid;
             // 1. Android ID
             String androidID = Secure.getString(context.getContentResolver(), Secure.ANDROID_ID);
+            Log.d("UniqueDeviceID","Android ID is used");
             
             // 2. Device ID
             String deviceID;
@@ -76,9 +77,12 @@ public class UniqueDeviceID extends CordovaPlugin {
             //    and returns null values randomly
             Log.d("UniqueDeviceID","Manufacturer:");
             Log.d("UniqueDeviceID",Build.MANUFACTURER);
-            String simID = "0";
-            if (Build.MANUFACTURER != "TomTom") {
+            String simID;
+            if (Build.MANUFACTURER.equals("TomTom") {
+                simID = "0";
+            }else{
                 simID = tm.getSimSerialNumber();
+                Log.d("UniqueDeviceID","SIM ID is used");
             }
             
             if ("9774d56d682e549c".equals(androidID) || androidID == null) {
@@ -100,6 +104,7 @@ public class UniqueDeviceID extends CordovaPlugin {
             uuid = String.format("%32s", uuid).replace(' ', '0');
             uuid = uuid.substring(0, 32);
             uuid = uuid.replaceAll("(\\w{8})(\\w{4})(\\w{4})(\\w{4})(\\w{12})", "$1-$2-$3-$4-$5");
+            Log.d("UniqueDeviceID",uuid);
 
             this.callbackContext.success(uuid);
         }catch(Exception e ) {
