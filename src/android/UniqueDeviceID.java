@@ -75,8 +75,8 @@ public class UniqueDeviceID extends CordovaPlugin {
             }
 
             
-            uuid = androidID.trim() + deviceID.trim() + simID.trim();
-            uuid = String.format("%32s", uuid).replace(' ', '0');
+            uuid = androidID + deviceID + simID;
+            uuid = String.format("%32s", uuid).replace(' ', '');
             uuid = uuid.substring(0, 32);
             uuid = uuid.replaceAll("(\\w{8})(\\w{4})(\\w{4})(\\w{4})(\\w{12})", "$1-$2-$3-$4-$5");
 
