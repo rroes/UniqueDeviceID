@@ -74,7 +74,10 @@ public class UniqueDeviceID extends CordovaPlugin {
              Log.d("UniqueDeviceID",deviceID);
 
             if (simID == null) {
-                simID = "0";
+                simID = tm.getSimSerialNumber();
+                if (simID == null) {
+                    simID = "0";
+                }    
             }
             Log.d("UniqueDeviceID",simID);
             
