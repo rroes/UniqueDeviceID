@@ -59,16 +59,27 @@ public class UniqueDeviceID extends CordovaPlugin {
             TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
 
             String uuid;
+            // 1. Android ID
             String androidID = Secure.getString(context.getContentResolver(), Secure.ANDROID_ID);
+            
+            // 2. Device ID
             String deviceID;
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 deviceID = tm.getImei();
+                Log.d("UniqueDeviceID","IMEI is used");
             } else {
                 deviceID = tm.getDeviceId();
+                Log.d("UniqueDeviceID","DEVICE ID is used");
             }
-            String simID = tm.getSimSerialNumber();
-            String imeiID = tm.getImei();
-            Log.d("UniqueDeviceID",imeiID);
+            
+            // 3. SIM ID - not for TomTom Devices because SIM performance is poor
+            //    and returns null values randomly
+            Log.d("UniqueDeviceID","Manufacturer:");
+            Log.d("UniqueDeviceID",Build.MANUFACTURER);
+            String simID = "0";
+            if (Build.MANUFACTURER != "TomTom") {
+                simID = tm.getSimSerialNumber();
+            }
             
             if ("9774d56d682e549c".equals(androidID) || androidID == null) {
                 androidID = "";
