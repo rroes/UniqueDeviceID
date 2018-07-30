@@ -60,20 +60,28 @@ public class UniqueDeviceID extends CordovaPlugin {
 
             String uuid;
             String androidID = Secure.getString(context.getContentResolver(), Secure.ANDROID_ID);
-            String deviceID = tm.getDeviceId();
+            String deviceID;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                deviceID = tm.getImei();
+            } else {
+                deviceID = tm.getDeviceId();
+            }
             String simID = tm.getSimSerialNumber();
 
             if ("9774d56d682e549c".equals(androidID) || androidID == null) {
                 androidID = "";
             }
+            Log.d("UniqueDeviceID",androidID);
 
             if (deviceID == null) {
                 deviceID = "";
             }
+            Log.d("UniqueDeviceID",deviceID);
 
             if (simID == null) {
                 simID = "";
             }
+            Log.d("UniqueDeviceID",simID);
 
             uuid = androidID + deviceID + simID;
             uuid = String.format("%32s", uuid).replace(' ', '0');
