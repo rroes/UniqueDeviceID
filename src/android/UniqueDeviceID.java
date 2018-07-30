@@ -63,9 +63,9 @@ public class UniqueDeviceID extends CordovaPlugin {
             String deviceID;
             
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                String deviceID = tm.getImei();
+                deviceID = tm.getImei();
             } else {
-                String deviceID = tm.getDeviceId();
+                deviceID = tm.getDeviceId();
             }
             
             String simID = tm.getSimSerialNumber();
