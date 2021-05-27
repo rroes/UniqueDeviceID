@@ -127,7 +127,7 @@ public class UniqueDeviceID extends CordovaPlugin {
             
             Log.d("UniqueDeviceID",uuid);
 
-            this.callbackContext.success(uuid, uuid2);
+            this.callbackContext.success(uuid);
         }catch(Exception e ) {
             this.callbackContext.error("Exception occurred: ".concat(e.getMessage()));
         }
