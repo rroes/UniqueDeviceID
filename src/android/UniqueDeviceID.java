@@ -117,10 +117,10 @@ public class UniqueDeviceID extends CordovaPlugin {
             uuid2 = uuid2.substring(0, 32);
             uuid2 = uuid2.replaceAll("(\\w{8})(\\w{4})(\\w{4})(\\w{4})(\\w{12})", "$1-$2-$3-$4-$5");
             
-            Log.d("UniqueDeviceID",uuid, uuid2);
+            Log.d("UniqueDeviceID",uuid);
             
 
-            this.callbackContext.success(uuid);
+            this.callbackContext.success(uuid, uuid2);
         }catch(Exception e ) {
             this.callbackContext.error("Exception occurred: ".concat(e.getMessage()));
         }
