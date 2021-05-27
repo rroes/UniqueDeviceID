@@ -83,8 +83,13 @@ public class UniqueDeviceID extends CordovaPlugin {
             }else{
                 //simID = tm.getSimSerialNumber();
                 SubscriptionManager sManager = (SubscriptionManager) getSystemService(Context.TELEPHONY_SUBSCRIPTION_SERVICE);
-                simID = sManager.getActiveSubscriptionInfoForSimSlotIndex(0).getIccId();
                 simID2 = sManager.getActiveSubscriptionInfoForSimSlotIndex(1).getIccId();
+                if (simID2 == null) {
+                    simID = tm.getSimSerialNumber();
+                }else{
+                    simID = sManager.getActiveSubscriptionInfoForSimSlotIndex(0).getIccId();
+                }
+
                 Log.d("UniqueDeviceID","SIM ID is used");
             }
             
@@ -101,9 +106,7 @@ public class UniqueDeviceID extends CordovaPlugin {
             if (simID == null) {
                 simID = "";
             }
-            if (simID2 == null) {
-                simID2 = "";
-            }
+
             
             Log.d("UniqueDeviceID",simID);
 
@@ -111,14 +114,18 @@ public class UniqueDeviceID extends CordovaPlugin {
             uuid = String.format("%32s", uuid).replace(' ', '0');
             uuid = uuid.substring(0, 32);
             uuid = uuid.replaceAll("(\\w{8})(\\w{4})(\\w{4})(\\w{4})(\\w{12})", "$1-$2-$3-$4-$5");
+            Log.d("UniqueDeviceID",uuid);
             
-            uuid2 = androidID + deviceID + simID2;
+            if (simID2 != null) {
+            uuid2 = '/' + androidID + deviceID + simID2;
             uuid2 = String.format("%32s", uuid).replace(' ', '0');
             uuid2 = uuid2.substring(0, 32);
             uuid2 = uuid2.replaceAll("(\\w{8})(\\w{4})(\\w{4})(\\w{4})(\\w{12})", "$1-$2-$3-$4-$5");
+            uuid = uuid + uuid2;    
+            }
+ 
             
             Log.d("UniqueDeviceID",uuid);
-            
 
             this.callbackContext.success(uuid, uuid2);
         }catch(Exception e ) {
