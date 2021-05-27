@@ -59,6 +59,7 @@ public class UniqueDeviceID extends CordovaPlugin {
             TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
 
             String uuid;
+            String uuid2;
             // 1. Android ID
             String androidID = Secure.getString(context.getContentResolver(), Secure.ANDROID_ID);
             Log.d("UniqueDeviceID","Android ID is used");
@@ -76,10 +77,14 @@ public class UniqueDeviceID extends CordovaPlugin {
             // 3. SIM ID - not for TomTom Devices because SIM performance is poor
             //    and returns null values randomly
             String simID;
+            String simID2;
             if (Build.MANUFACTURER.equals("TomTom")) {
                 simID = "0";
             }else{
-                simID = tm.getSimSerialNumber();
+                //simID = tm.getSimSerialNumber();
+                SubscriptionManager sManager = (SubscriptionManager) getSystemService(Context.TELEPHONY_SUBSCRIPTION_SERVICE)
+                simID = sManager.getActiveSubscriptionInfoForSimSlotIndex(0).getIccId();
+                simID2 = sManager.getActiveSubscriptionInfoForSimSlotIndex(1).getIccId();
                 Log.d("UniqueDeviceID","SIM ID is used");
             }
             
@@ -96,13 +101,24 @@ public class UniqueDeviceID extends CordovaPlugin {
             if (simID == null) {
                 simID = "";
             }
+            if (simID2 == null) {
+                simID2 = "";
+            }
+            
             Log.d("UniqueDeviceID",simID);
 
             uuid = androidID + deviceID + simID;
             uuid = String.format("%32s", uuid).replace(' ', '0');
             uuid = uuid.substring(0, 32);
             uuid = uuid.replaceAll("(\\w{8})(\\w{4})(\\w{4})(\\w{4})(\\w{12})", "$1-$2-$3-$4-$5");
-            Log.d("UniqueDeviceID",uuid);
+            
+            uuid2 = androidID + deviceID + simID2;
+            uuid2 = String.format("%32s", uuid).replace(' ', '0');
+            uuid2 = uuid2.substring(0, 32);
+            uuid2 = uuid2.replaceAll("(\\w{8})(\\w{4})(\\w{4})(\\w{4})(\\w{12})", "$1-$2-$3-$4-$5");
+            
+            Log.d("UniqueDeviceID",uuid, uuid2);
+            
 
             this.callbackContext.success(uuid);
         }catch(Exception e ) {
