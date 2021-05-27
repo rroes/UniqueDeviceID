@@ -78,7 +78,7 @@ public class UniqueDeviceID extends CordovaPlugin {
             
             // 3. SIM ID - not for TomTom Devices because SIM performance is poor
             //    and returns null values randomly
-            String simID;
+            String simID = "";
             String simID2 = "";
             if (Build.MANUFACTURER.equals("TomTom")) {
                 simID = "0";
