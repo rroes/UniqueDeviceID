@@ -86,14 +86,14 @@ public class UniqueDeviceID extends CordovaPlugin {
                 //simID = tm.getSimSerialNumber();
                 SubscriptionManager sManager = (SubscriptionManager) context.getSystemService(Context.TELEPHONY_SUBSCRIPTION_SERVICE);
     
-                SubscriptionInfo infoSim1 = sManager.getActiveSubscriptionInfoForSimSlotIndex(0).
+                SubscriptionInfo infoSim1 = sManager.getActiveSubscriptionInfoForSimSlotIndex(0);
                 if (infoSim1 != null){
                     simID = infoSim1.getIccId();
                 }     
                 if (simID == null){
                     simID = tm.getSimSerialNumber();
                 }
-                SubscriptionInfo infoSim2 = sManager.getActiveSubscriptionInfoForSimSlotIndex(1).
+                SubscriptionInfo infoSim2 = sManager.getActiveSubscriptionInfoForSimSlotIndex(1);
                 if (infoSim2 != null){
                     simID2 = infoSim2.getIccId();
                 }  
