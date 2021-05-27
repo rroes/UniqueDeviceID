@@ -12,6 +12,7 @@ import android.content.pm.PackageManager;
 import android.provider.Settings.Secure;
 import android.telephony.TelephonyManager;
 import android.telephony.SubscriptionManager;
+import android.telephony.SubscriptionInfo;
 import android.util.Log;
 import android.os.Build;
 
