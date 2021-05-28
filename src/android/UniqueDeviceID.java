@@ -59,7 +59,8 @@ public class UniqueDeviceID extends CordovaPlugin {
         try {
             Context context = cordova.getActivity().getApplicationContext();
             TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-
+            
+            String uuidOld;
             String uuid;
             String uuid2;
             // 1. Android ID
@@ -78,12 +79,13 @@ public class UniqueDeviceID extends CordovaPlugin {
             
             // 3. SIM ID - not for TomTom Devices because SIM performance is poor
             //    and returns null values randomly
+            String simIDold = "";
             String simID = "";
             String simID2 = "";
             if (Build.MANUFACTURER.equals("TomTom")) {
                 simID = "0";
             }else{
-                //simID = tm.getSimSerialNumber();
+                simIDold = tm.getSimSerialNumber();
                 SubscriptionManager sManager = (SubscriptionManager) context.getSystemService(Context.TELEPHONY_SUBSCRIPTION_SERVICE);
     
                 SubscriptionInfo infoSim1 = sManager.getActiveSubscriptionInfoForSimSlotIndex(0);
@@ -114,10 +116,22 @@ public class UniqueDeviceID extends CordovaPlugin {
             if (simID == null) {
                 simID = "";
             }
-
+            if (simIDold == null) {
+                simIDold = "";
+            }
             
             Log.d("UniqueDeviceID",simID);
-
+            
+            /*
+            if (simIDOld != "") {
+            uuidOld = androidID + deviceID + simID2;
+            uuidOld = String.format("%32s", uuid).replace(' ', '0');
+            uuidOld = uuid2.substring(0, 32);
+            uuidOld = uuid2.replaceAll("(\\w{8})(\\w{4})(\\w{4})(\\w{4})(\\w{12})", "$1-$2-$3-$4-$5");
+            uuidOld = uuid + "/";    
+            }
+            */
+            
             uuid = androidID + deviceID + simID;
             uuid = String.format("%32s", uuid).replace(' ', '0');
             uuid = uuid.substring(0, 32);
@@ -126,7 +140,7 @@ public class UniqueDeviceID extends CordovaPlugin {
             
             if (simID2 != "") {
             uuid2 = androidID + deviceID + simID2;
-            uuid2 = String.format("%32s", uuid).replace(' ', '0');
+            uuid2 = String.format("%32s", uuid2).replace(' ', '0');
             uuid2 = uuid2.substring(0, 32);
             uuid2 = uuid2.replaceAll("(\\w{8})(\\w{4})(\\w{4})(\\w{4})(\\w{12})", "$1-$2-$3-$4-$5");
             uuid = uuid + "/" + uuid2;    
