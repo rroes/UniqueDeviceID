@@ -122,15 +122,7 @@ public class UniqueDeviceID extends CordovaPlugin {
             
             Log.d("UniqueDeviceID",simID);
             
-            /*
-            if (simIDOld != "") {
-            uuidOld = androidID + deviceID + simID2;
-            uuidOld = String.format("%32s", uuid).replace(' ', '0');
-            uuidOld = uuid2.substring(0, 32);
-            uuidOld = uuid2.replaceAll("(\\w{8})(\\w{4})(\\w{4})(\\w{4})(\\w{12})", "$1-$2-$3-$4-$5");
-            uuidOld = uuid + "/";    
-            }
-            */
+
             
             uuid = androidID + deviceID + simID;
             uuid = String.format("%32s", uuid).replace(' ', '0');
@@ -146,6 +138,14 @@ public class UniqueDeviceID extends CordovaPlugin {
             uuid = uuid + "/" + uuid2;    
             }
  
+            if (simIDOld != "") {
+            uuidOld = androidID + deviceID + simIDOld;
+            uuidOld = String.format("%32s", uuidOld).replace(' ', '0');
+            uuidOld = uuidOld.substring(0, 32);
+            uuidOld = uuidOld.replaceAll("(\\w{8})(\\w{4})(\\w{4})(\\w{4})(\\w{12})", "$1-$2-$3-$4-$5");
+            uuid = uuid + "/" + uuidOld;     
+            }
+
             
             Log.d("UniqueDeviceID",uuid);
 
