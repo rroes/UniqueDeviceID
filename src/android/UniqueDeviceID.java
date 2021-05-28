@@ -125,11 +125,11 @@ public class UniqueDeviceID extends CordovaPlugin {
             Log.d("UniqueDeviceID",uuid);
             
             if (simID2 != "") {
-            uuid2 = '/' + androidID + deviceID + simID2;
+            uuid2 = androidID + deviceID + simID2;
             uuid2 = String.format("%32s", uuid).replace(' ', '0');
             uuid2 = uuid2.substring(0, 32);
             uuid2 = uuid2.replaceAll("(\\w{8})(\\w{4})(\\w{4})(\\w{4})(\\w{12})", "$1-$2-$3-$4-$5");
-            uuid = uuid + uuid2;    
+            uuid = uuid + "/" + uuid2;    
             }
  
             
